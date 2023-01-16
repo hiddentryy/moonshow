@@ -8,12 +8,20 @@
 
   <body>
     <style>
-      #map {
-        width: 60%;
-        height: 350px;
-        margin: 0 auto;
-        /* add this line */
-      }
+#map {
+    width: 60%;
+    height: 350px;
+    margin: 0 auto;
+  }
+  /* Add this media query*/
+  @media only screen and (max-width: 768px) {
+    #map {
+      width: 100%;
+      height: 50%;
+      position: absolute;
+      bottom: 0;
+    }
+  }
 
       body {
         overflow: hidden;
@@ -36,12 +44,7 @@
         padding: 0;
       }
 
-      @media only screen and (max-width: 768px) {
-        #map {
-          height: 50%;
-          width: 100%;
-        }
-      }
+
 
     </style>
     <script>
