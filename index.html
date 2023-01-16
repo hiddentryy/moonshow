@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Map Example</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+
+  <body>
+    <style>
+      #map {
+        width: 60%;
+        height: 350px;
+        margin: 0 auto;
+        /* add this line */
+      }
+
+      body {
+        overflow: hidden;
+      }
+
+      body {
+        background-color: black;
+        background-image: url("https://c.pxhere.com/photos/de/6b/star_sky_night_forest_night_sky-125836.jpg!d");
+        background-size: cover;
+        /* scales the image to cover the entire background */
+        background-repeat: no-repeat;
+        /* the image will not repeat */
+      }
+
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      @media only screen and (max-width: 768px) {
+        #map {
+          height: 50%;
+          width: 100%;
+        }
+      }
+
+    </style>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 1,
+          center: {
+            lat: 0,
+            lng: 0
+          },
+          mapTypeId: 'terrain'
+        });
+
+        var marker;
+
+        google.maps.event.addListener(map, "click", function(event) {
+          if (marker) {
+            marker.setMap(null);
+          }
+          marker = new google.maps.Marker({
+            position: event.latLng,
+            map: map,
+            draggable: true
+          });
+          document.getElementById("coord").innerHTML =
+            "Latitude: " + event.latLng.lat().toFixed(2) + "<br>Longitude: " + event.latLng.lng().toFixed(2);
+
+          var crescent = document.getElementById("crescent");
+          crescent.style.transform = "rotate(" + event.latLng.lat() + "deg)";
+
+          google.maps.event.addListener(marker, "drag", function(event) {
+            document.getElementById("coord").innerHTML =
+              "Latitude: " + event.latLng.lat().toFixed(2) + "<br>Longitude: " + event.latLng.lng().toFixed(2);
+            crescent.style.transform = "rotate(" + event.latLng.lat() + "deg)";
+          });
+        });
+      }
+
+    </script>
+    <h1 style="color: white; display: flex; justify-content: center;">
+      Chose your location on the map to see the maximum angle of crescent for your location
+    </h1>
+    <div style="display: flex; justify-content: center; color: white;">
+
+      <img id="crescent" style="width: 20%; height: auto; margin: 5%; margin-bottom: 10%;" src="https://i.postimg.cc/vTpP80NB/moon-removebg.png">
+    </div>
+    <div id="map"></div>
+    <div id="coord"></div>
+    <script src="script.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtwHzjYytdxWXsnQpy6b6tpSjj8-Xw-_s&callback=initMap">
+    </script>
+  </body>
+
+</html>
